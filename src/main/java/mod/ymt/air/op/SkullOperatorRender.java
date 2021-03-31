@@ -1,12 +1,12 @@
 /**
  * Copyright 2014 Yamato
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -37,20 +37,20 @@ public class SkullOperatorRender extends AbstractOperatorRender {
 	private static final ResourceLocation resWither = new ResourceLocation("textures/entity/skeleton/wither_skeleton.png");
 	private static final ResourceLocation resZombie = new ResourceLocation("textures/entity/zombie/zombie.png");
 	private static final ResourceLocation resCreeper = new ResourceLocation("textures/entity/creeper/creeper.png");
-	
+
 	private ModelSkeletonHead model1 = new ModelSkeletonHead(0, 0, 64, 32);
 	private ModelSkeletonHead model2 = new ModelSkeletonHead(0, 0, 64, 64);
-	
+
 	@Override
 	public boolean hasSpecialRender() {
 		return true;
 	}
-	
+
 	@Override
 	public void renderBlock(RenderBlocks render, BlockData data) {
 		;
 	}
-	
+
 	@Override
 	public void renderBlockSpecial(RenderManager manager, RenderBlocks render, BlockData data) {
 		int tagSkullType = 0;
@@ -62,7 +62,7 @@ public class SkullOperatorRender extends AbstractOperatorRender {
 			tagRot = tag.getByte("Rot");
 			tagExtraType = tag.getString("ExtraType");
 		}
-		
+
 		ModelSkeletonHead modelskeletonhead = model1;
 		switch (tagSkullType) {
 			case 0:
@@ -79,7 +79,7 @@ public class SkullOperatorRender extends AbstractOperatorRender {
 			case 3:
 				ResourceLocation res = AbstractClientPlayer.locationStevePng;
 				if (tagExtraType != null && tagExtraType.isEmpty() == false) {
-					res = AbstractClientPlayer.getLocationSkull(tagExtraType);
+					res = AbstractClientPlayer.getLocationSkin(tagExtraType);
 					AbstractClientPlayer.getDownloadImageSkin(res, tagExtraType);
 				}
 				loadTexture(manager, res);
@@ -88,7 +88,7 @@ public class SkullOperatorRender extends AbstractOperatorRender {
 				loadTexture(manager, resCreeper);
 				break;
 		}
-		
+
 		GL11.glPushMatrix();
 		{
 			GL11.glDisable(GL11.GL_CULL_FACE);
@@ -122,7 +122,7 @@ public class SkullOperatorRender extends AbstractOperatorRender {
 		}
 		GL11.glPopMatrix();
 	}
-	
+
 	private static NBTTagCompound getNBT(IBlockAccess blockAccess, Coord3D pos) {
 		if (blockAccess instanceof ImitationSpace) {
 			ImitationSpace space = (ImitationSpace) blockAccess;

@@ -29,7 +29,6 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Vec3Pool;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -172,11 +171,6 @@ public class ImitationSpace implements IBlockAccess {
 
 	public NBTTagCompound getTileEntityData(Coord3D absPos) {
 		return allTileData.get(absPos);
-	}
-
-	@Override
-	public Vec3Pool getWorldVec3Pool() { // RenderBlocks で使用
-		return parent.getWorldVec3Pool();
 	}
 
 	@Override
