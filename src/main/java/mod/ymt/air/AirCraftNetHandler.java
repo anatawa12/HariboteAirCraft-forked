@@ -33,11 +33,11 @@ import cpw.mods.fml.relauncher.Side;
  */
 public class AirCraftNetHandler extends AbstractMessageHandler {
 	protected final AirCraftCore core;
-	
+
 	public AirCraftNetHandler(AirCraftCore core) {
 		this.core = core;
 	}
-	
+
 	@Override
 	public void initPackets(SimpleNetworkWrapper instance) {
 		int id = 0;
@@ -47,36 +47,36 @@ public class AirCraftNetHandler extends AbstractMessageHandler {
 		instance.registerMessage(PacketSurfaceBlock.class, PacketSurfaceBlock.class, id++, Side.CLIENT);
 		instance.registerMessage(PacketTileEntity.class, PacketTileEntity.class, id++, Side.CLIENT);
 	}
-	
+
 	public void sendKeyToServer(byte key) {
 		sendToServer(new PacketKeyHandling(clientUserName(), key));
 	}
-	
+
 	public void sendMoveStopToServerAndClients(String playerName) {
 		core.logFine("sendMoveStopToClients %s", playerName);
-		new PacketKeyHandling(clientUserName(), AirCraftMoveHandler.PROC_STOP).onHandleServer();
+		new PacketKeyHandling(playerName, AirCraftMoveHandler.PROC_STOP).onHandleServer();
 	}
-	
+
 	public void sendRequestSurfacesToServer(int entityId) {
 		core.logFine("sendRequestSurfacesToServer: sender = %s", entityId);
 		sendToServer(new PacketRequestSurface(entityId));
 	}
-	
+
 	public void sendSemiSurfaceToClient(int entityId, byte[] data) {
 		core.logFine("sendSemiSurfaceToClient: sender = %s", entityId);
 		sendToClient(new PacketSurfaceBlock(true, entityId, data)); // TODO ディメンション指定
 	}
-	
+
 	public void sendSurfaceToClient(int entityId, byte[] data) {
 		core.logFine("sendSurfaceToClient: sender = %s", entityId);
 		sendToClient(new PacketSurfaceBlock(false, entityId, data)); // TODO ディメンション指定
 	}
-	
+
 	public void sendTileDataToClient(int entityId, NBTTagCompound data) {
 		core.logFine("sendTileDataToClient: sender = %s", entityId);
 		sendToClient(new PacketTileEntity(entityId, data)); // TODO ディメンション指定
 	}
-	
+
 	private static String clientUserName() {
 		Minecraft mc = FMLClientHandler.instance().getClient();
 		if (mc != null) {
